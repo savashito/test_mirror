@@ -46,5 +46,10 @@ namespace Mirror.Examples.Chat
             //           NetworkServer.sen
             chatWindow.gameObject.SetActive(true);
         }
+
+        public override void OnServerDisconnect(NetworkConnection  info)
+        {
+            Debug.Log("SOmeone disconnected");
+        }
     }
 }
