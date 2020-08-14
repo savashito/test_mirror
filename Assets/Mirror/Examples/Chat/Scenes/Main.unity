@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 179863750}
   - component: {fileID: 179863749}
   m_Layer: 5
-  m_Name: ChatHistory
+  m_Name: TextUsers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
