@@ -22,7 +22,17 @@ namespace Mirror.Examples.Chat
             logger.Log("Added callbacks to Chat Window");
 
         }
+        void UpdateTextPlayers()
+        {
+            textUsers.text = "";
+            foreach (KeyValuePair<string, Player> entry in players)
+            {
+                Player player = entry.Value;
+                // do something with entry.Value or entry.Key
+                textUsers.text += player.playerName + "\n";
 
+            }
+        }
         void OnPlayerJoinLobby(Player player)
         {
             /*
@@ -32,14 +42,14 @@ namespace Mirror.Examples.Chat
             AppendMessage(prettyMessage);
             */
             players[player.playerName] = player;
+            UpdateTextPlayers();
             /*
             Player p =  ;
             if (p == null)
             {
-
             }*/
             // UnityEngine.Debug.Log("Noew player koko " + player.playerName);
-            textUsers.text += player.playerName + "\n";
+            // textUsers.text += player.playerName + "\n";
             // logger.Log(player.playerName);
         }
         void OnPlayerMessage(Player player, string message)
