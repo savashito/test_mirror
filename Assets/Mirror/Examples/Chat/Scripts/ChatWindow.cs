@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
 namespace Mirror.Examples.Chat
 {
@@ -13,23 +14,56 @@ namespace Mirror.Examples.Chat
         public Text chatHistory;
         public Text textUsers;
         public Scrollbar scrollbar;
-        Dictionary<string, Player> players = new Dictionary<string, Player>();
+        public Toggle toggleListo;
+        public GameObject btnInicar;
+        public Player playerLocal;
+        public int connectionId;
+        //Dictionary<string, Player> players = new Dictionary<string, Player>();
 
         public void Awake()
         {
             Player.OnMessage += OnPlayerMessage;
+            Player.OnReady += OnReady;
             Player.OnPlayerJoinLobby += OnPlayerJoinLobby;
+            Player.OnPlayerExitLobby += OnPlayerExitLobby;
             logger.Log("Added callbacks to Chat Window");
 
         }
+        public void OnClickToggle()
+        {
+            Player player = NetworkClient.connection.identity.GetComponent<Player>();
+            //player.listo = toggleListo.isOn;
+            player.CmdReady(toggleListo.isOn);
+            //player.listo = true;
+        }
         void UpdateTextPlayers()
         {
+            GameObject[] playersA;
+
             textUsers.text = "";
-            foreach (KeyValuePair<string, Player> entry in players)
+            playersA = GameObject.FindGameObjectsWithTag("Player");
+            if(playerLocal != null)
+                btnInicar.SetActive(playerLocal.lider);
+            foreach (GameObject entry in playersA)
             {
-                Player player = entry.Value;
+                Player player = entry.GetComponent<Player>();
                 // do something with entry.Value or entry.Key
-                textUsers.text += player.playerName + "\n";
+                
+                if(player.listo == true)
+                {
+                    
+                    textUsers.text += $"<color=green> {player.playerName} </color> \n";
+
+                }
+                else
+                {
+                   // btnInicar.SetActive(false);
+                    textUsers.text += $"<color=red> {player.playerName} </color> \n";
+                    btnInicar.SetActive(false);
+                }
+
+                /* $"<color=red>{player.playerName}: </color> {message}" :
+                 $"<color=blue>{player.playerName}: </color> {message}";*/
 
             }
         }
@@ -41,8 +75,20 @@ namespace Mirror.Examples.Chat
                 $"<color=blue>{player.playerName}: </color> {message}";
             AppendMessage(prettyMessage);
             */
-            players[player.playerName] = player;
+            //  players[player.playerName] = player;
+            if (player.isLocalPlayer)
+                playerLocal = player;
+            /*
+                player.netIdentity.
+            Debug.Log("ID" + player.netId);
+            if (connection.connectionId == connectionId)
+            {
+                chatWindow.playerLocal = playergo.GetComponent<Player>();
+            }
+            */
+           // btnInicar.SetActive(playerLocal.isServer);
             UpdateTextPlayers();
+           // Debug.Log("ID" + player.netId);
             /*
             Player p =  ;
             if (p == null)
@@ -52,6 +98,10 @@ namespace Mirror.Examples.Chat
             // textUsers.text += player.playerName + "\n";
             // logger.Log(player.playerName);
         }
+        private void OnPlayerExitLobby(Player player)
+        {
+            UpdateTextPlayers();
+        }
         void OnPlayerMessage(Player player, string message)
         {
             string prettyMessage = player.isLocalPlayer ?
@@ -60,6 +110,12 @@ namespace Mirror.Examples.Chat
             AppendMessage(prettyMessage);
 
             logger.Log(message);
+        }
+
+        void OnReady(Player player, bool ready)
+        {
+            player.listo = ready;
+            UpdateTextPlayers();
         }
 
         public void OnSend()
