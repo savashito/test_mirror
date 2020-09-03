@@ -31,8 +31,10 @@ namespace Mirror.Examples.Chat
         {
             base.OnClientConnect(conn);
             Debug.Log("Holi me uni a mi mismo");
+/*
             coneccionId = conn.connectionId;
             chatWindow.connectionId = conn.connectionId;
+            */
             // tell the server to create a player with this name
             conn.Send(new CreatePlayerMessage { name = PlayerName });
         }

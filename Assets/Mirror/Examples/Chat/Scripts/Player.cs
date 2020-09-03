@@ -13,7 +13,9 @@ namespace Mirror.Examples.Chat
 
         public static event Action<Player, string> OnMessage;
         public static event Action<Player, bool> OnReady;
-        public static event Action<Player, bool> OnLider;
+        // public static event Action<Player, bool> OnLider;
+        public static event Action<Player, string> OnCreateSala;
+        
         public static event Action<Player> OnPlayerJoinLobby;
         public static event Action<Player> OnPlayerExitLobby;
 
@@ -31,6 +33,12 @@ namespace Mirror.Examples.Chat
         }
 
         [Command]
+        public void CmdCreateSala(string message)
+        {
+            if (message.Trim() != "")
+                RpcReceive(message.Trim());
+        }
+        [Command]
         public void CmdSend(string message)
         {
             if (message.Trim() != "")
@@ -43,7 +51,12 @@ namespace Mirror.Examples.Chat
             RcpReady(ready);
         }
 
+        [ClientRpc]
+        public void RcpCreateSala(string salaName)
+        {
+            OnCreateSala?.Invoke(this, salaName);
 
+        }
         [ClientRpc]
         public void RcpReady(bool ready)
         {

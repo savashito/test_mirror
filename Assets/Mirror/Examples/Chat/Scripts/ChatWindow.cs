@@ -10,6 +10,7 @@ namespace Mirror.Examples.Chat
     {
         static readonly ILogger logger = LogFactory.GetLogger(typeof(ChatWindow));
 
+        /*
         public InputField chatMessage;
         public Text chatHistory;
         public Text textUsers;
@@ -18,17 +19,34 @@ namespace Mirror.Examples.Chat
         public GameObject btnInicar;
         public Player playerLocal;
         public int connectionId;
+        */
         //Dictionary<string, Player> players = new Dictionary<string, Player>();
 
         public void Awake()
         {
+            /*
             Player.OnMessage += OnPlayerMessage;
             Player.OnReady += OnReady;
             Player.OnPlayerJoinLobby += OnPlayerJoinLobby;
             Player.OnPlayerExitLobby += OnPlayerExitLobby;
+            */
+            Player.OnCreateSala += OnCreateSala;
             logger.Log("Added callbacks to Chat Window");
 
         }
+        // esto debe ir en ListaSalasController
+        public void CreateSala()
+        {
+            Player player = NetworkClient.connection.identity.GetComponent<Player>();
+            //player.listo = toggleListo.isOn;
+            player.CmdCreateSala(player.playerName);
+            //player.listo = true;
+        }
+        public void OnCreateSala(Player player, string message)
+        {
+            Debug.Log("Se cre la sala " + message);
+        }
+        /*
         public void OnClickToggle()
         {
             Player player = NetworkClient.connection.identity.GetComponent<Player>();
@@ -36,6 +54,7 @@ namespace Mirror.Examples.Chat
             player.CmdReady(toggleListo.isOn);
             //player.listo = true;
         }
+
         void UpdateTextPlayers()
         {
             GameObject[] playersA;
@@ -62,38 +81,20 @@ namespace Mirror.Examples.Chat
                     btnInicar.SetActive(false);
                 }
 
-                /* $"<color=red>{player.playerName}: </color> {message}" :
-                 $"<color=blue>{player.playerName}: </color> {message}";*/
 
             }
         }
         void OnPlayerJoinLobby(Player player)
         {
-            /*
-            string prettyMessage = player.isLocalPlayer ?
-                $"<color=red>{player.playerName}: </color> {message}" :
-                $"<color=blue>{player.playerName}: </color> {message}";
-            AppendMessage(prettyMessage);
-            */
+
             //  players[player.playerName] = player;
             if (player.isLocalPlayer)
                 playerLocal = player;
-            /*
-                player.netIdentity.
-            Debug.Log("ID" + player.netId);
-            if (connection.connectionId == connectionId)
-            {
-                chatWindow.playerLocal = playergo.GetComponent<Player>();
-            }
-            */
+            
            // btnInicar.SetActive(playerLocal.isServer);
             UpdateTextPlayers();
            // Debug.Log("ID" + player.netId);
-            /*
-            Player p =  ;
-            if (p == null)
-            {
-            }*/
+
             // UnityEngine.Debug.Log("Noew player koko " + player.playerName);
             // textUsers.text += player.playerName + "\n";
             // logger.Log(player.playerName);
@@ -148,5 +149,6 @@ namespace Mirror.Examples.Chat
             // slam the scrollbar down
             scrollbar.value = 0;
         }
+    */
     }
 }
