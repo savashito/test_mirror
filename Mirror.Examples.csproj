@@ -72,10 +72,11 @@
     <Compile Include="Assets\Mirror\Examples\Benchmark\Scripts\MonsterMovement.cs" />
     <Compile Include="Assets\Mirror\Examples\Benchmark\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Mirror\Examples\Chat\Scripts\ChatNetworkManager.cs" />
-    <Compile Include="Assets\Mirror\Examples\Chat\Scripts\ChatWindow.cs" />
     <Compile Include="Assets\Mirror\Examples\Chat\Scripts\InteroNetworkManager.cs" />
+    <Compile Include="Assets\Mirror\Examples\Chat\Scripts\ListaSalasUIManager.cs" />
     <Compile Include="Assets\Mirror\Examples\Chat\Scripts\Player.cs" />
     <Compile Include="Assets\Mirror\Examples\Chat\Scripts\Sala.cs" />
+    <Compile Include="Assets\Mirror\Examples\Chat\Scripts\SalaUIManager.cs" />
     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\MultiSceneNetManager.cs" />
     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\PhysicsCollision.cs" />
     <Compile Include="Assets\Mirror\Examples\MultipleAdditiveScenes\Scripts\PhysicsSimulator.cs" />

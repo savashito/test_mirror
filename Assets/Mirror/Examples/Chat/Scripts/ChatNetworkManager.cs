@@ -12,7 +12,7 @@ namespace Mirror.Examples.Chat
             networkAddress = hostname;
         }
 
-        public ChatWindow chatWindow;
+        // public ChatWindow chatWindow;
         public int coneccionId;
         public class CreatePlayerMessage : MessageBase
         {
@@ -57,7 +57,7 @@ namespace Mirror.Examples.Chat
             
             // send message to all client
             //           NetworkServer.sen
-            chatWindow.gameObject.SetActive(true);
+            // chatWindow.gameObject.SetActive(true);
         }
 
         public override void OnServerDisconnect(NetworkConnection  info)

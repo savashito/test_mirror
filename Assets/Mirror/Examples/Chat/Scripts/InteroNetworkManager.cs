@@ -14,8 +14,8 @@ namespace Mirror.Examples.Chat
             networkAddress = hostname;
         }
 
-        public ChatWindow chatWindow;
-        public int coneccionId;
+        // public ChatWindow chatWindow;
+        // public int coneccionId;
         private void Awake()
         {
             //usuariosConectados = new string[10];

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ChatWindow
   - Sala
+  - Canvas
   layers:
   - Default
   - TransparentFX
