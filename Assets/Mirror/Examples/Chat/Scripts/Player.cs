@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Mirror.Examples.Chat
 {
@@ -11,6 +12,8 @@ namespace Mirror.Examples.Chat
         [SyncVar]
         public bool lider;
 
+        public GameObject salaPrefab;
+        public GameObject ownSala;
         public static event Action<Player, string> OnMessage;
         public static event Action<Player, bool> OnReady;
         // public static event Action<Player, bool> OnLider;
@@ -29,12 +32,27 @@ namespace Mirror.Examples.Chat
         private void OnDestroy()
         {
             OnPlayerExitLobby?.Invoke(this);
+            NetworkServer.Destroy(ownSala);
+
+            if (hasAuthority)
+            {
+                Debug.Log("Server OnDestroy");
+            }
+            else
+            {
+                Debug.Log("client OnDestroy");
+            }
+            
 
         }
 
         [Command]
         public void CmdCreateSala(string salaName)
         {
+            Debug.Log("CmdCreateSala");
+            ownSala = Instantiate(salaPrefab);
+            ownSala.GetComponent<Sala>().salaName = salaName;
+            NetworkServer.Spawn(ownSala);
             if (salaName.Trim() != "")
                 RcpCreateSala(salaName.Trim());
         }
@@ -54,6 +72,8 @@ namespace Mirror.Examples.Chat
         [ClientRpc]
         public void RcpCreateSala(string salaName)
         {
+            UnityEngine.Debug.Log("RcpCreateSala");
+
             OnCreateSala?.Invoke(this, salaName);
 
         }

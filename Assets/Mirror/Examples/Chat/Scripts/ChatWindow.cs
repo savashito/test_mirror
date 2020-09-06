@@ -27,11 +27,12 @@ namespace Mirror.Examples.Chat
             /*
             Player.OnMessage += OnPlayerMessage;
             Player.OnReady += OnReady;
+            */
             Player.OnPlayerJoinLobby += OnPlayerJoinLobby;
             Player.OnPlayerExitLobby += OnPlayerExitLobby;
-            */
             Player.OnCreateSala += OnCreateSala;
             logger.Log("Added callbacks to Chat Window");
+
 
         }
         // esto debe ir en ListaSalasController
@@ -45,7 +46,46 @@ namespace Mirror.Examples.Chat
         public void OnCreateSala(Player player, string message)
         {
             Debug.Log("Se cre la sala " + message);
-            chatHistory.text += message + "\n";
+            UpdateTextSalas();
+            // chatHistory.text += message + "\n";
+        }
+        void UpdateTextSalas()
+        {
+            GameObject[] salasA;
+
+            chatHistory.text = "";
+            salasA = GameObject.FindGameObjectsWithTag("Sala");
+//            if (playerLocal != null)
+  //              btnInicar.SetActive(playerLocal.lider);
+            foreach (GameObject entry in salasA)
+            {
+                Sala player = entry.GetComponent<Sala>();
+                // do something with entry.Value or entry.Key
+
+                chatHistory.text += $"<color=green> {player.salaName} </color> \n";
+                /*
+                if (player.listo == true)
+                {
+
+
+                }
+                else
+                {
+                    // btnInicar.SetActive(false);
+                    textUsers.text += $"<color=red> {player.playerName} </color> \n";
+                    btnInicar.SetActive(false);
+                }*/
+
+
+            }
+        }
+        void OnPlayerJoinLobby(Player player)
+        {
+            UpdateTextSalas();
+        }
+        private void OnPlayerExitLobby(Player player)
+        {
+            UpdateTextSalas();
         }
         /*
         public void OnClickToggle()

@@ -6,7 +6,8 @@ namespace Mirror.Examples.Chat
     public class InteroNetworkManager : NetworkManager
     {
         public string PlayerName { get; set; }
-        public string[] usuariosConectados;
+        //public string[] usuariosConectados;
+        //public string[] salas;
         public bool iniciasServer;
         public void SetHostname(string hostname)
         {
@@ -17,7 +18,8 @@ namespace Mirror.Examples.Chat
         public int coneccionId;
         private void Awake()
         {
-            usuariosConectados = new string[10];
+            //usuariosConectados = new string[10];
+            //salas = new string[10];
             if (iniciasServer)
             {
                 base.StartServer();
@@ -56,6 +58,7 @@ namespace Mirror.Examples.Chat
             Debug.Log("Server.OnCreatePlayer ");
             GameObject playergo = Instantiate(playerPrefab);
             playergo.GetComponent<Player>().playerName = createPlayerMessage.name;
+            NetworkServer.AddPlayerForConnection(connection, playergo);
             /*
             if (connection.connectionId == 0)
             {
@@ -67,8 +70,7 @@ namespace Mirror.Examples.Chat
             Debug.Log("Usuario " + createPlayerMessage.name);
             */
             // set it as the player
-            NetworkServer.AddPlayerForConnection(connection, playergo);
-            usuariosConectados[connection.connectionId - 1] = createPlayerMessage.name;
+            // usuariosConectados[connection.connectionId - 1] = createPlayerMessage.name;
 
             // send message to all client
             //           NetworkServer.sen

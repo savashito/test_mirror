@@ -4762,8 +4762,8 @@ MonoBehaviour:
     type: 3}
   autoCreatePlayer: 0
   playerSpawnMethod: 0
-  spawnPrefabs: []
-  usuariosConectados: []
+  spawnPrefabs:
+  - {fileID: 6355767102627728882, guid: 32ffce78e329365498fab64c15a73d72, type: 3}
   iniciasServer: 0
   chatWindow: {fileID: 0}
   coneccionId: 0
