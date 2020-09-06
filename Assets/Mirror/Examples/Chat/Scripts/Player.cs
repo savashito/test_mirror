@@ -33,10 +33,10 @@ namespace Mirror.Examples.Chat
         }
 
         [Command]
-        public void CmdCreateSala(string message)
+        public void CmdCreateSala(string salaName)
         {
-            if (message.Trim() != "")
-                RpcReceive(message.Trim());
+            if (salaName.Trim() != "")
+                RcpCreateSala(salaName.Trim());
         }
         [Command]
         public void CmdSend(string message)

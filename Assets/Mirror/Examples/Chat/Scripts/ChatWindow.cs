@@ -10,9 +10,9 @@ namespace Mirror.Examples.Chat
     {
         static readonly ILogger logger = LogFactory.GetLogger(typeof(ChatWindow));
 
+        public Text chatHistory;
         /*
         public InputField chatMessage;
-        public Text chatHistory;
         public Text textUsers;
         public Scrollbar scrollbar;
         public Toggle toggleListo;
@@ -45,6 +45,7 @@ namespace Mirror.Examples.Chat
         public void OnCreateSala(Player player, string message)
         {
             Debug.Log("Se cre la sala " + message);
+            chatHistory.text += message + "\n";
         }
         /*
         public void OnClickToggle()
