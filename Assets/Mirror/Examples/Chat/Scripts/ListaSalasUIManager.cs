@@ -9,12 +9,24 @@ namespace Mirror.Examples.Chat
     public class ListaSalasUIManager : MonoBehaviour
     {
         public Text listaSalasText;
-       
+        public GameObject buttonUnirteSala;
+        private GameObject[] buttonsSalas;
+        public GameObject spawnButtons;
         public void Awake()
         {
             Player.OnPlayerJoinGame += OnPlayerJoinGame;
             Player.OnPlayerExitGame += OnPlayerExitGame;
             Player.OnCreateSala += OnCreateSala;
+            buttonsSalas = new GameObject[10];
+            for (int i = 0; i < buttonsSalas.Length; i++)
+            {
+                GameObject buttonUnirte = Instantiate(buttonUnirteSala, spawnButtons.transform);
+                // buttonUnirte
+                buttonUnirte.SetActive(false);
+                buttonUnirte.transform.position = new Vector3(590f,650f - i*35f,0f);
+                buttonsSalas[i] = buttonUnirte;
+
+            }
         }
         public void CreateSala()
         {
@@ -26,17 +38,32 @@ namespace Mirror.Examples.Chat
             Debug.Log("Se cre la sala " + message);
             UpdateTextSalas();
         }
-        void UpdateTextSalas()
+        public void UneteASala(Text text)
         {
+            Player player = NetworkClient.connection.identity.GetComponent<Player>();
+            player.CmdUneteSala(text.text);
+        }
+        void UpdateTextSalas()
+        {   
             GameObject[] salasA;
+            int i;
             if (listaSalasText != null)
             {
-                listaSalasText.text = "";
+                for (i = 0; i < buttonsSalas.Length; i++)
+                {
+                    buttonsSalas[i].SetActive(false);
+                }
+                // listaSalasText.text = "";
                 salasA = GameObject.FindGameObjectsWithTag("Sala");
+                i = 0;
                 foreach (GameObject entry in salasA)
                 {
-                    Sala player = entry.GetComponent<Sala>();
-                    listaSalasText.text += $"<color=green> {player.salaName} </color> \n";
+                    Sala sala = entry.GetComponent<Sala>();
+                    listaSalasText.text += $"<color=green> {sala.salaName} </color> \n";
+                    Text t = buttonsSalas[i].GetComponentInChildren<Text>();
+                    t.text = sala.salaName;
+                    buttonsSalas[i].SetActive(true);
+                    ++i;
                 }
             }
         }

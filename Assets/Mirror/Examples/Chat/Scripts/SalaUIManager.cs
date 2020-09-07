@@ -47,6 +47,7 @@ namespace Mirror.Examples.Chat
             UpdateTextSalas();
             // chatHistory.text += message + "\n";
         }
+
         void UpdateTextSalas()
         {
             GameObject[] salasA;
