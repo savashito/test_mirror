@@ -12,12 +12,13 @@ namespace Mirror.Examples.Chat
         public GameObject buttonUnirteSala;
         private GameObject[] buttonsSalas;
         public GameObject spawnButtons;
-        public void Awake()
+        public void Start()
         {
             Player.OnPlayerJoinGame += OnPlayerJoinGame;
             Player.OnPlayerExitGame += OnPlayerExitGame;
             Player.OnCreateSala += OnCreateSala;
             buttonsSalas = new GameObject[10];
+            
             for (int i = 0; i < buttonsSalas.Length; i++)
             {
                 GameObject buttonUnirte = Instantiate(buttonUnirteSala, spawnButtons.transform);
@@ -25,7 +26,6 @@ namespace Mirror.Examples.Chat
                 buttonUnirte.SetActive(false);
                 buttonUnirte.transform.position = new Vector3(590f,650f - i*35f,0f);
                 buttonsSalas[i] = buttonUnirte;
-
             }
         }
         public void CreateSala()
@@ -53,7 +53,7 @@ namespace Mirror.Examples.Chat
                 {
                     buttonsSalas[i].SetActive(false);
                 }
-                // listaSalasText.text = "";
+                listaSalasText.text = "";
                 salasA = GameObject.FindGameObjectsWithTag("Sala");
                 i = 0;
                 foreach (GameObject entry in salasA)

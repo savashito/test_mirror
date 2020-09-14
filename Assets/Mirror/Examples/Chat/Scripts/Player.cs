@@ -47,8 +47,6 @@ namespace Mirror.Examples.Chat
             {
                 Debug.Log("client OnDestroy");
             }
-            
-
         }
 
         [Command]
@@ -60,7 +58,7 @@ namespace Mirror.Examples.Chat
             // ownSala.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
             NetworkServer.Spawn(ownSala);
             if (salaName.Trim() != "")
-                RcpCreateSala(salaName.Trim());
+                RcpCreateSala(salaName.Trim(), ownSala);
         }
         [Command]
         public void CmdSend(string message)
@@ -83,23 +81,26 @@ namespace Mirror.Examples.Chat
         public void RpcUneteSala(string salaName)
         {
             UnityEngine.Debug.Log("RpcUneteSala");
-            Debug.Log(salaName + "" + isLocalPlayer);
-            // GameObject sala = salas[salaName];
+            Debug.Log(salaName + " " + isLocalPlayer);
+            GameObject sala = salas[salaName];
             if (isLocalPlayer) 
                 sala.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
+            /*
             transform.parent = sala.transform;
             OnPlayerJoinSala?.Invoke(this, salaName);
+            */
         }
 
         [ClientRpc]
-        public void RcpCreateSala(string salaName)
+        public void RcpCreateSala(string salaName, GameObject sala)
         {
-            UnityEngine.Debug.Log("RcpCreateSala");
+            UnityEngine.Debug.Log("RcpCreateSala " );
+            // sala.GetComponent<Sala>().salaName = "Sala cliente!!";
             /*
             GameObject sala = Instantiate(salaPrefab);
             sala.GetComponent<Sala>().salaName = salaName;
-            salas.Add(salaName, sala);
             */
+            salas.Add(salaName, sala);
             Debug.Log(salaName + "Se agrego sala ");
 
             Debug.Log("" + isLocalPlayer);
