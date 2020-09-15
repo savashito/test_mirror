@@ -2397,6 +2397,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   salaName: 
+  listaPlayersText: {fileID: 179863749}
 --- !u!114 &-5556171425638810032
 MonoBehaviour:
   m_ObjectHideFlags: 0

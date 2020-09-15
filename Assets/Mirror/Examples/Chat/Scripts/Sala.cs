@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mirror.Examples.Chat
 {
@@ -10,9 +11,34 @@ namespace Mirror.Examples.Chat
     {
         [SyncVar]
         public string salaName;
-        //[SyncVar]
-        //public SyncListItem players;
 
+        public Text listaPlayersText;
+        public void Start()
+        {
+            Player.OnPlayerJoinSala += OnJoinSala;
+            Player.salas.Add(salaName, gameObject);
+
+        }
+        void OnJoinSala(Player player, string salaName)
+        {
+            UpdateTextUsersSalas();
+        }
+        void UpdateTextUsersSalas()
+        {
+            // GameObject[] players;
+            int i;
+            if (listaPlayersText != null)
+            {
+                listaPlayersText.text = "";
+                Player [] players = gameObject.GetComponentsInChildren<Player>();
+                i = 0;
+                foreach (Player entry in players)
+                {
+                    // Player sala = entry.GetComponent<Player>();
+                    listaPlayersText.text += $"<color=green> {entry.playerName} </color> \n";
+                    ++i;
+                }
+            }
+        }
     }
-
 }
