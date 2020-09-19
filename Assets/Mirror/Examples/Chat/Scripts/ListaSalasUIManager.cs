@@ -16,6 +16,7 @@ namespace Mirror.Examples.Chat
         {
             Player.OnPlayerJoinGame += OnPlayerJoinGame;
             Player.OnPlayerExitGame += OnPlayerExitGame;
+            Player.OnPlayerExitSala += OnExitSala;
             Player.OnCreateSala += OnCreateSala;
             buttonsSalas = new GameObject[10];
             
@@ -27,6 +28,7 @@ namespace Mirror.Examples.Chat
                 buttonUnirte.transform.position = new Vector3(590f,650f - i*35f,0f);
                 buttonsSalas[i] = buttonUnirte;
             }
+            InvokeRepeating("UpdateTextSalas", 2.0f, 0.3f);
         }
         public void CreateSala()
         {
@@ -43,12 +45,17 @@ namespace Mirror.Examples.Chat
             Player player = NetworkClient.connection.identity.GetComponent<Player>();
             player.CmdUneteSala(text.text);
         }
+        public void OnExitSala(Player player)
+        {
+           // UpdateTextSalas();
+        }
         void UpdateTextSalas()
         {   
             GameObject[] salasA;
             int i;
             if (listaSalasText != null)
             {
+                Debug.Log("Se intenta actualizar la vista de las salas");
                 for (i = 0; i < buttonsSalas.Length; i++)
                 {
                     buttonsSalas[i].SetActive(false);
@@ -58,6 +65,7 @@ namespace Mirror.Examples.Chat
                 i = 0;
                 foreach (GameObject entry in salasA)
                 {
+                    Debug.Log("Hay una sala activa");
                     Sala sala = entry.GetComponent<Sala>();
                     listaSalasText.text += $"<color=green> {sala.salaName} </color> \n";
                     Text t = buttonsSalas[i].GetComponentInChildren<Text>();

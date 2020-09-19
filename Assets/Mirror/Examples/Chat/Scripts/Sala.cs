@@ -16,8 +16,10 @@ namespace Mirror.Examples.Chat
         public void Awake()
         {
             Debug.Log("Se creo la sala");
-           // Player.OnPlayerJoinSala += OnJoinSala;
-            //Player.salas.Add(salaName, gameObject);
+            Player.OnPlayerJoinSala += OnJoinSala;
+            Player.OnPlayerExitSala += OnExitSala;
+
+            Player.salas.Add(salaName, gameObject);
 
         }
 
@@ -25,9 +27,14 @@ namespace Mirror.Examples.Chat
         {
             Player player = NetworkClient.connection.identity.GetComponent<Player>();
             player.CmdExitSala();
+           
         }
 
         void OnJoinSala(Player player, string salaName)
+        {
+            UpdateTextUsersSalas();
+        }
+        void OnExitSala(Player player)
         {
             UpdateTextUsersSalas();
         }
