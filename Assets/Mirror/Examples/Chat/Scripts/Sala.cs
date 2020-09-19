@@ -13,12 +13,20 @@ namespace Mirror.Examples.Chat
         public string salaName;
 
         public Text listaPlayersText;
-        public void Start()
+        public void Awake()
         {
-            Player.OnPlayerJoinSala += OnJoinSala;
-            Player.salas.Add(salaName, gameObject);
+            Debug.Log("Se creo la sala");
+           // Player.OnPlayerJoinSala += OnJoinSala;
+            //Player.salas.Add(salaName, gameObject);
 
         }
+
+        public void ExitSala()
+        {
+            Player player = NetworkClient.connection.identity.GetComponent<Player>();
+            player.CmdExitSala();
+        }
+
         void OnJoinSala(Player player, string salaName)
         {
             UpdateTextUsersSalas();
