@@ -13,12 +13,15 @@ namespace Mirror.Examples.Chat
         public string salaName;
 
         public Text listaPlayersText;
+    public Toggle toggleReady;
         public void Awake()
         {
             Debug.Log("Se creo la sala");
             Player.OnPlayerJoinSala += OnJoinSala;
             Player.OnPlayerExitSala += OnExitSala;
             Player.salas[salaName] = gameObject;
+            if(isServer==false)
+                InvokeRepeating("UpdateTextUsersSalas", 2.0f, 0.3f);
         }
 
         public void ExitSala()
@@ -27,14 +30,19 @@ namespace Mirror.Examples.Chat
             player.CmdExitSala();
            
         }
-
+        public void PlayerReady()
+        {
+            Player player = NetworkClient.connection.identity.GetComponent<Player>();
+            print("Setting player to ready ");
+            player.CmdReady(toggleReady.isOn);
+        }
         void OnJoinSala(Player player, string salaName)
         {
-            UpdateTextUsersSalas();
+            // UpdateTextUsersSalas();
         }
         void OnExitSala(Player player)
         {
-            UpdateTextUsersSalas();
+            // UpdateTextUsersSalas();
         }
         void UpdateTextUsersSalas()
         {
@@ -48,7 +56,13 @@ namespace Mirror.Examples.Chat
                 foreach (Player entry in players)
                 {
                     // Player sala = entry.GetComponent<Player>();
-                    listaPlayersText.text += $"<color=green> {entry.playerName} </color> \n";
+                    if(entry.lider)
+                        listaPlayersText.text += $"<color=yellow> {entry.playerName} </color> \n";
+
+                    if (entry.listo)
+                        listaPlayersText.text += $"<color=green> {entry.playerName} </color> \n";
+                    else
+                        listaPlayersText.text += $"<color=red> {entry.playerName} </color> \n";
                     ++i;
                 }
             }

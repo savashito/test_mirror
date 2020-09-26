@@ -80,8 +80,12 @@ namespace Mirror.Examples.Chat
         public override void OnServerDisconnect(NetworkConnection info)
         {
             Debug.Log("SOmeone disconnected");
-            NetworkServer.DestroyPlayerForConnection(info);
             Debug.Log("" + info.connectionId);
+            
+            Player player = info.identity.GetComponent<Player>();
+            player.ExitSala();
+            NetworkServer.DestroyPlayerForConnection(info);
+
         }
     }
 }

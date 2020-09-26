@@ -40,9 +40,10 @@ namespace Mirror.Examples.Chat
         {
             OnPlayerExitGame?.Invoke(this);
 //            NetworkServer.Destroy(ownSala);
-
+            
             if (hasAuthority)
             {
+                // CmdExitSala();
                 Debug.Log("Server OnDestroy");
             }
             else
@@ -73,7 +74,8 @@ namespace Mirror.Examples.Chat
         [Command]
         public void CmdReady(bool ready)
         {
-            RcpReady(ready);
+            listo = ready;
+            // RcpReady(ready);
         }
         [Command]
         public void CmdUneteSala(string salaName)
@@ -86,27 +88,33 @@ namespace Mirror.Examples.Chat
         [Command]
         public void CmdExitSala()
         {
+            ExitSala();
+        }
+        public void ExitSala() {
             GameObject sala = myParent.gameObject;
             Debug.Log("Antes de null");
             myParent = null;
             transform.parent = null;
-            Player[] players = sala.GetComponentsInChildren<Player>();
-            Debug.Log("Despues de null");
-            lider = false;
-            Debug.Log("# SALAS " + players.Length);
-            if (players.Length == 0)
+            if(sala != null)
             {
-                sala.SetActive(false);
-                sala.transform.parent = null;
-                RpcDestroySala(sala);
-            }else
-            {
-                players[0].lider = true;
+                Player[] players = sala.GetComponentsInChildren<Player>();
+                Debug.Log("Despues de null");
+                lider = false;
+                Debug.Log("# SALAS " + players.Length);
+                if (players.Length == 0)
+                {
+                    sala.SetActive(false);
+                    sala.transform.parent = null;
+                    RpcDestroySala(sala);
+                }
+                else
+                {
+                    players[0].lider = true;
+                }
             }
-
-                // NetworkServer.Destroy(sala);
-
         }
+
+
         [Command]
         public void CmdDestroySala(GameObject sala)
         {
