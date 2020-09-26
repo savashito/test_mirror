@@ -16,7 +16,7 @@ namespace Mirror.Examples.Chat
         public NetworkIdentity myParent = null;
 
         public GameObject salaPrefab;
-        public GameObject ownSala;
+        // public GameObject ownSala;
         public static event Action<Player, string> OnMessage;
         public static event Action<Player, bool> OnReady;
         // public static event Action<Player, bool> OnLider;
@@ -39,7 +39,7 @@ namespace Mirror.Examples.Chat
         private void OnDestroy()
         {
             OnPlayerExitGame?.Invoke(this);
-            NetworkServer.Destroy(ownSala);
+//            NetworkServer.Destroy(ownSala);
 
             if (hasAuthority)
             {
@@ -55,9 +55,10 @@ namespace Mirror.Examples.Chat
         public void CmdCreateSala(string salaName)
         {
             Debug.Log("CmdCreateSala");
-            ownSala = Instantiate(salaPrefab);
+            GameObject ownSala = Instantiate(salaPrefab);
             ownSala.GetComponent<Sala>().salaName = salaName;
-            salas.Add(salaName, ownSala);
+            // salas.Add(salaName, ownSala);
+            salas[salaName] = ownSala;
             lider = true;
             NetworkServer.Spawn(ownSala);
             if (salaName.Trim() != "")
@@ -80,21 +81,36 @@ namespace Mirror.Examples.Chat
             GameObject sala = salas[salaName];
             myParent = sala.GetComponent<NetworkIdentity>();
             gameObject.transform.parent = myParent.transform;
-             RpcUneteSala(salaName);
+           //  RpcUneteSala(salaName);
         }
         [Command]
         public void CmdExitSala()
         {
-           
+            GameObject sala = myParent.gameObject;
             Debug.Log("Antes de null");
             myParent = null;
             transform.parent = null;
+            Player[] players = sala.GetComponentsInChildren<Player>();
             Debug.Log("Despues de null");
-            
+            lider = false;
+            Debug.Log("# SALAS " + players.Length);
+            if (players.Length == 0)
+            {
+                sala.SetActive(false);
+                sala.transform.parent = null;
+                RpcDestroySala(sala);
+            }else
+            {
+                players[0].lider = true;
+            }
+
+                // NetworkServer.Destroy(sala);
+
         }
         [Command]
         public void CmdDestroySala(GameObject sala)
         {
+            /*
             GameObject []players;
             players = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject entry in players)
@@ -104,19 +120,22 @@ namespace Mirror.Examples.Chat
                     entry.GetComponent<Player>().myParent = null;
                     entry.transform.parent = null;
                 }
-            }
+            }*/
+            lider = false;
             //RpcDestroySala(sala);
-            //NetworkServer.UnSpawn(sala);
+            // NetworkServer.UnSpawn(sala);
             NetworkServer.Destroy(sala);
         }
         [ClientRpc]
         public void RpcDestroySala(GameObject sala)
         {
             sala.transform.parent = null;
+            sala.SetActive(false);
            // if (transform.parent == sala.transform)
              //   myParent = null;
                 //transform.parent = null;
         }
+        // corre en los clientes
         void UpdateParent(NetworkIdentity salaVieja,NetworkIdentity salaNueva)
         {
             
@@ -144,6 +163,7 @@ namespace Mirror.Examples.Chat
                     if (hasAuthority)
                     {
                         salaVieja.transform.parent = null;
+                            /*
                         if(lider == true)
                         {
                             GameObject[] players;
@@ -159,8 +179,9 @@ namespace Mirror.Examples.Chat
                             }
                             CmdDestroySala(salaVieja.gameObject);
                         }
+                            */
                     }
-                    lider = false;
+                    // lider = false;
                     OnPlayerExitSala?.Invoke(this);
                 }
                 
@@ -168,19 +189,19 @@ namespace Mirror.Examples.Chat
 
         }
         
+            /*
         [ClientRpc]
         public void RpcUneteSala(string salaName)
         {
             UnityEngine.Debug.Log("RpcUneteSala");
             Debug.Log(salaName + " " + isLocalPlayer);
-            /*
             GameObject sala = salas[salaName];
             if (isLocalPlayer) 
                 sala.transform.parent = GameObject.FindGameObjectWithTag("Canvas").transform;
-                */
             // transform.parent = sala.transform;
             
         }
+                */
 
         [ClientRpc]
         public void RcpCreateSala(string salaName, GameObject sala)

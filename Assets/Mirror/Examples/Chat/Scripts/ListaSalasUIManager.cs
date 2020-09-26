@@ -55,7 +55,6 @@ namespace Mirror.Examples.Chat
             int i;
             if (listaSalasText != null)
             {
-                Debug.Log("Se intenta actualizar la vista de las salas");
                 for (i = 0; i < buttonsSalas.Length; i++)
                 {
                     buttonsSalas[i].SetActive(false);
@@ -65,7 +64,7 @@ namespace Mirror.Examples.Chat
                 i = 0;
                 foreach (GameObject entry in salasA)
                 {
-                    Debug.Log("Hay una sala activa");
+                    // Debug.Log("Hay una sala activa");
                     Sala sala = entry.GetComponent<Sala>();
                     listaSalasText.text += $"<color=green> {sala.salaName} </color> \n";
                     Text t = buttonsSalas[i].GetComponentInChildren<Text>();

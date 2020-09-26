@@ -18,9 +18,7 @@ namespace Mirror.Examples.Chat
             Debug.Log("Se creo la sala");
             Player.OnPlayerJoinSala += OnJoinSala;
             Player.OnPlayerExitSala += OnExitSala;
-
-            Player.salas.Add(salaName, gameObject);
-
+            Player.salas[salaName] = gameObject;
         }
 
         public void ExitSala()
