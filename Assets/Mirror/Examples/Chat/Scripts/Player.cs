@@ -71,6 +71,7 @@ namespace Mirror.Examples.Chat
             if (message.Trim() != "")
                 RpcReceive(message.Trim());
         }
+
         [Command]
         public void CmdReady(bool ready)
         {
@@ -234,6 +235,17 @@ namespace Mirror.Examples.Chat
         public void RpcReceive(string message)
         {
             OnMessage?.Invoke(this, message);
+        }
+        [ClientRpc]
+        public void RpcReceiveErgData(string message)
+        {
+            OnMessage?.Invoke(this, message);
+        }
+        [Command]
+        public void CmdSendErgData(string message)
+        {
+            if (message.Trim() != "")
+                RpcReceiveErgData(message.Trim());
         }
     }
 }
