@@ -9,7 +9,7 @@ namespace Mirror.Examples.Chat
     public class ListaSalasUIManager : MonoBehaviour
     {
         public Text listaSalasText;
-        public GameObject yo;
+        // public GameObject yo;
         public GameObject buttonUnirteSala;
         private GameObject[] buttonsSalas;
         public GameObject spawnButtons;
@@ -35,7 +35,7 @@ namespace Mirror.Examples.Chat
         {
             Player player = NetworkClient.connection.identity.GetComponent<Player>();
             player.CmdCreateSala(player.playerName);
-            yo.SetActive(false);
+            gameObject.SetActive(false);
         }
         public void OnCreateSala(Player player, string message)
         {
@@ -46,7 +46,7 @@ namespace Mirror.Examples.Chat
         {
             Player player = NetworkClient.connection.identity.GetComponent<Player>();
             player.CmdUneteSala(text.text);
-            yo.SetActive(false);
+            gameObject.SetActive(false);
         }
         public void OnExitSala(Player player)
         {

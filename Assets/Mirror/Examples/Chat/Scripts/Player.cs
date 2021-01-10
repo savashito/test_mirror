@@ -182,7 +182,7 @@ namespace Mirror.Examples.Chat
             sala.transform.parent = null;
             DontDestroyOnLoad(sala);
             SceneManager.LoadScene("otraEscena");
-
+            CmdSendErgData("Jjojo");
             // if (transform.parent == sala.transform)
             //   myParent = null;
             //transform.parent = null;
@@ -278,6 +278,18 @@ namespace Mirror.Examples.Chat
         public void RpcReceive(string message)
         {
             OnMessage?.Invoke(this, message);
+        }
+        [ClientRpc]
+        public void RpcReceiveErgData(string message)
+        {
+            OnMessage?.Invoke(this, message);
+            Debug.Log(message + "Jojojojo RpcReceiveErgData");
+        }
+        [Command]
+        public void CmdSendErgData(string message)
+        {
+            if (message.Trim() != "")
+                RpcReceiveErgData(message.Trim());
         }
     }
 }
