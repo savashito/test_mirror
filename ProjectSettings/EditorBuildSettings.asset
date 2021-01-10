@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Mirror/Examples/Chat/Scenes/server.unity
     guid: aedcdc22035d6874c9406cf05ff6c3ab
+  - enabled: 1
+    path: Assets/Mirror/Examples/Chat/Scenes/otraEscena.unity
+    guid: 21c69591a8cb41f46b650712c52dd0d7
   m_configObjects: {}

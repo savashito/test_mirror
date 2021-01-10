@@ -2,6 +2,7 @@
 
 namespace Mirror.Examples.Chat 
 {
+
     [AddComponentMenu("")]
     public class InteroNetworkManager : NetworkManager
     {
@@ -25,6 +26,7 @@ namespace Mirror.Examples.Chat
                 base.StartServer();
                 Debug.Log("Servidor Inicio");
             }
+            DontDestroyOnLoad(gameObject);
         }
         public class CreatePlayerMessage : MessageBase
         {

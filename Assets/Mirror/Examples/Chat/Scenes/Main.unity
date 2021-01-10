@@ -292,6 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listaSalasText: {fileID: 751364934}
+  yo: {fileID: 0}
   buttonUnirteSala: {fileID: 1719143204}
   spawnButtons: {fileID: 783570490}
 --- !u!114 &53422542
@@ -332,7 +333,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53422539}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3007,7 +3008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1719143205
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3157,7 +3158,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   transport: {fileID: 1783103024}
-  networkAddress: localhost
+  networkAddress: 3.133.130.222
   maxConnections: 4
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
@@ -3563,7 +3564,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 1, y: 0}
-  m_SizeDelta: {x: -1, y: -270.9}
+  m_SizeDelta: {x: -1, y: -529.9}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1921547724
 MonoBehaviour:

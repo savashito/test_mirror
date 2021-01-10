@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Mirror.Examples.Chat
 {
@@ -28,12 +29,27 @@ namespace Mirror.Examples.Chat
         public static event Action<Player> OnPlayerExitGame;
         public static Dictionary<string, GameObject> salas = new Dictionary<string, GameObject>();
 
+
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
+            this.transform.parent = null;
+        }
+        
+
+        public void Indestructible()
+        {
+            DontDestroyOnLoad(this);
+
+        }
+
         public void Start()
         {
             UnityEngine.Debug.Log("Noew player " + playerName);
             if(myParent != null)
                 transform.parent = myParent.transform;
             OnPlayerJoinGame?.Invoke(this);
+            this.transform.parent = null;
         }
 
         private void OnDestroy()
@@ -68,6 +84,7 @@ namespace Mirror.Examples.Chat
         [Command]
         public void CmdSend(string message)
         {
+            Debug.Log("El mensaje llego al server");
             if (message.Trim() != "")
                 RpcReceive(message.Trim());
         }
@@ -86,9 +103,21 @@ namespace Mirror.Examples.Chat
            //  RpcUneteSala(salaName);
         }
         [Command]
+        public void CmdIniciar()
+        {
+            gameObject.transform.parent = null;
+            //  RpcUneteSala(salaName);
+        }
+        [Command]
         public void CmdExitSala()
         {
             ExitSala();
+        }
+        [Command]
+        public void CmdCambioEscena(GameObject sala)
+        {
+            Debug.Log("Cambio de escena");
+            RpcCambioEscena(sala);
         }
         public void ExitSala() {
             GameObject sala = myParent.gameObject;
@@ -139,9 +168,24 @@ namespace Mirror.Examples.Chat
         {
             sala.transform.parent = null;
             sala.SetActive(false);
+           
            // if (transform.parent == sala.transform)
              //   myParent = null;
                 //transform.parent = null;
+        }
+        [ClientRpc]
+        public void RpcCambioEscena(GameObject sala)
+        {
+            Debug.Log("Cambio de escena");
+            GameObject salaH = sala.transform.GetChild(0).gameObject;
+            salaH.SetActive(false);
+            sala.transform.parent = null;
+            DontDestroyOnLoad(sala);
+            SceneManager.LoadScene("otraEscena");
+
+            // if (transform.parent == sala.transform)
+            //   myParent = null;
+            //transform.parent = null;
         }
         // corre en los clientes
         void UpdateParent(NetworkIdentity salaVieja,NetworkIdentity salaNueva)

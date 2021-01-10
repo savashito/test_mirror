@@ -23,10 +23,9 @@ namespace Mirror.Examples.Chat
 
         public void Awake()
         {
-            /*
-            Player.OnMessage += OnPlayerMessage;
-            Player.OnReady += OnReady;
-            */
+            
+            //Player.OnReady += OnReady;
+            
             // Player.OnPlayerJoinLobby += OnPlayerJoinLobby;
             // Player.OnPlayerExitLobby += OnPlayerExitLobby;
             Player.OnCreateSala += OnCreateSala;
@@ -47,6 +46,7 @@ namespace Mirror.Examples.Chat
             UpdateTextSalas();
             // chatHistory.text += message + "\n";
         }
+
 
         void UpdateTextSalas()
         {
